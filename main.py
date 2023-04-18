@@ -195,12 +195,13 @@ if submit_button:
     # sort the dataframe by column similarity_score in descending order
     df_full_url_sorted_similarity_score_desc = df_images_similarity['full_url'].loc[
         df_images_similarity['similarity_score'].sort_values(ascending=False).index]
+    print('URL image results ranked are:')
     print(df_full_url_sorted_similarity_score_desc)
-    print('about to output search results to local file')
+    #print('about to output search results to local file')
     # output DataFrame to CSV file with directory path
     #output_dir = r'C:\Users\patri\OneDrive\Documents\dcu\2023_semester_3\CA6005_Mechanics_of_Search\assignment_2\prod\\'
     #output_file = 'image_results_ranked_pycharm_v1.csv'
-    df_full_url_sorted_similarity_score_desc.to_csv(output_dir + output_file, index=False)
+    #df_full_url_sorted_similarity_score_desc.to_csv(output_dir + output_file, index=False)
     #df_full_url_sorted_similarity_score_desc.to_csv(
     #    'image_object_detection_prediction/image_results_ranked_pycharm_v1.csv',
     #    index=False)
