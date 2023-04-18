@@ -28,7 +28,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-drive_path = "C:\\Users\\patri\\OneDrive\\Documents\\dcu\\2023_semester_3\\CA6005_Mechanics_of_Search\\assignment_2\\prod"
+#drive_path = "C:\\Users\\patri\\OneDrive\\Documents\\dcu\\2023_semester_3\\CA6005_Mechanics_of_Search\\assignment_2\\prod"
 
 #"C:\\"
 #"C:\\Users\\patri\\OneDrive\\Documents\\dcu\\2023_semester_3\\CA6005_Mechanics_of_Search\\assignment_2\\prod"
@@ -38,9 +38,9 @@ drive_path = "C:\\Users\\patri\\OneDrive\\Documents\\dcu\\2023_semester_3\\CA600
 # Print the list of files
 #print(files)
 
-file_path = "C:/Users/patri/OneDrive/Documents/dcu/2023_semester_3/CA6005_Mechanics_of_Search/assignment_2/prod/images_acquired_and_object_detected_test_small_amount.csv"  # Replace with the actual path to your file
+#file_path = "images_acquired_and_object_detected_test_small_amount.csv"  # Replace with the actual path to your file
 # Load the CSV file into a DataFrame
-df_images_data = pd.read_csv(file_path)
+df_images_data = pd.read_csv("images_acquired_and_object_detected_test_small_amount.csv")
 # Print the DataFrame
 print(df_images_data)
 
@@ -198,8 +198,8 @@ if submit_button:
     print(df_full_url_sorted_similarity_score_desc)
     print('about to output search results to local file')
     # output DataFrame to CSV file with directory path
-    output_dir = r'C:\Users\patri\OneDrive\Documents\dcu\2023_semester_3\CA6005_Mechanics_of_Search\assignment_2\prod\\'
-    output_file = 'image_results_ranked_pycharm_v1.csv'
+    #output_dir = r'C:\Users\patri\OneDrive\Documents\dcu\2023_semester_3\CA6005_Mechanics_of_Search\assignment_2\prod\\'
+    #output_file = 'image_results_ranked_pycharm_v1.csv'
     df_full_url_sorted_similarity_score_desc.to_csv(output_dir + output_file, index=False)
     #df_full_url_sorted_similarity_score_desc.to_csv(
     #    'image_object_detection_prediction/image_results_ranked_pycharm_v1.csv',
