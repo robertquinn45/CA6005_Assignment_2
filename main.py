@@ -191,10 +191,15 @@ if submit_button:
     df_images_similarity = df_transposed.join(df_images_data)
     print('printing df_images_similarity')
     # print(df_images_similarity)
+    filtered = df_images_similarity['similarity_score'] > 0
+    # use the filter with loc to create a new DataFrame
+    df_images_similarity_no_zero = df_images_similarity.loc[filtered]
+    print('printing  df_images_similarity_no_zero without similarity scores of zero')
+    print(df_images_similarity_no_zero)                                                                                                                                                                                                                                                       
     # print('sort the image_id column by the similarity scores descending')
     # sort the dataframe by column similarity_score in descending order
-    df_full_url_sorted_similarity_score_desc = df_images_similarity['full_url'].loc[
-        df_images_similarity['similarity_score'].sort_values(ascending=False).index]
+    df_full_url_sorted_similarity_score_desc = df_images_similarity_no_zero['full_url'].loc[
+        df_images_similarity_no_zero['similarity_score'].sort_values(ascending=False).index]
     print('URL image results ranked are:')
     print(df_full_url_sorted_similarity_score_desc)
     #print('about to output search results to local file')
