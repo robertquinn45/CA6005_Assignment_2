@@ -38,6 +38,8 @@ def preprocess_documents(documents):
 
     # Loop through each document in the list
     for document in documents:
+        # some documents may be in float format, convert these documnets to string, before lowercasing in the following step, as lower function does not work on float
+        document= str(document)
         # Lowercase the document
         document = document.lower()
 
