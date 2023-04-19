@@ -113,8 +113,6 @@ print(df_images_data)
 
 # Print the dataframe
 df_images_data = df_images_data.drop('src', axis=1)
-df_images_data = df_images_data.drop('title', axis=1)
-df_images_data = df_images_data.drop('images', axis=1)
 df_images_data = df_images_data.drop('filename', axis=1)
 
 # print('df_images count is:',df_images_data.shape[0])
