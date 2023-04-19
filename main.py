@@ -214,7 +214,7 @@ if submit_button:
 
     #query = "what flag does a person like?"
     #print('query is', query)
-    preprocessed_query = preprocess(query)
+    preprocessed_query = preprocess_query(query)
     print('preprocessed_query is', preprocessed_query)
     # Use TfidfVectorizer to create a vector representation of the documents and query
     tfidf_matrix = vectorizer.fit_transform(processed_documents + [preprocessed_query])
