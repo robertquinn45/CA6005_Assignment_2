@@ -15,6 +15,7 @@ from nltk.tokenize import word_tokenize
 import nltk
 from nltk.corpus import stopwords
 nltk.download('stopwords')
+nltk.download('punkt')
 from nltk.stem import PorterStemmer
 from nltk.stem import SnowballStemmer                                  
 import pandas as pd
