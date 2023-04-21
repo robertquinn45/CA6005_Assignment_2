@@ -179,8 +179,8 @@ if submit_button:
     print(df_images_similarity_no_zero)                                                                                                                                                                                                                                                       
     # print('sort the image_id column by the similarity scores descending')
     # sort the dataframe by column similarity_score in descending order
-    df_full_url_sorted_similarity_score_desc = df_images_similarity_no_zero['full_url'].loc[
-        df_images_similarity_no_zero['similarity_score'].sort_values(ascending=False).index]
+    #df_full_url_sorted_similarity_score_desc = df_images_similarity_no_zero['full_url'].loc[df_images_similarity_no_zero['similarity_score'].sort_values(ascending=False).index]
+    df_full_url_sorted_similarity_score_desc = df_images_similarity_no_zero.loc[df_images_similarity_no_zero['similarity_score'].sort_values(ascending=False).index,['full_url','similarity_score']]
     print('URL image results ranked are:')
     print(df_full_url_sorted_similarity_score_desc)
     df_full_url_sorted_similarity_score_desc['similarity_score'] = df_full_url_sorted_similarity_score_desc['similarity_score'].multiply(100)
