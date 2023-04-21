@@ -99,7 +99,7 @@ def preprocess_query(query):
 
 #file_path = "images_acquired_and_object_detected_test_small_amount.csv"  # Replace with the actual path to your file
 # Load the CSV file into a DataFrame
-df_images_data = pd.read_csv("images_acquired_and_object_detected_all.csv")
+df_images_data = pd.read_csv("images_acquired_and_object_detected.csv")
 # Print the DataFrame
 print(df_images_data)
 
@@ -134,72 +134,6 @@ alt_desc_list_of_strings = alt_desc_column.tolist()
 
 image_dictionary = df_images_data.set_index('image_id').to_dict()['alt']
 
-#####################################
-# Preprocess the documents by tokenizing, removing stop words, and stemming the words
-#nltk.download('stopwords')
-#nltk.download('punkt')
-
-# Preprocess the documents and queries
-#stop_words = set(stopwords.words('english'))
-#stemmer = PorterStemmer()
-
-
-# def preprocess(text):
-    # tokens = word_tokenize(text.lower())
-    # tokens = [stemmer.stem(token) for token in tokens if token not in stop_words and token.isalpha()]
-    # return tokens
-
-
-# processed_image_descriptions = {}
-# for image_id, alt in image_dictionary.items():
-    # # print('printing alt',alt)
-    # if alt is not None:
-        # processed_image_descriptions[image_id] = preprocess(str(alt))
-    # else:
-        # logging.info('alt not processed as it is None is:' + str(alt))
-
-#logging.info('processed_image_descriptions is:' + str(processed_image_descriptions))
-
-# Create a dictionary of all the unique terms in the documents and queries, and assign an index to each term
-# term_dict = {}
-# for image_id, alt in processed_image_descriptions.items():
-    # # print ('image_id is:',image_id)
-    # # print ('alt is:',alt)
-    # for token in alt:
-        # if token not in term_dict:
-            # term_dict[token] = len(term_dict)
-
-# logging.info('term_dict is:'+str(term_dict))
-# term_dict is all the unqiue words listed once across each docmuent, with an index number beside it
-# Create a term-document matrix, where each row represents a term and each column represents a document, and the value in each cell represents the frequency of the term in the document. You can use the following code to create the matrix:
-
-# Create a term-document matrix - the term_doc_matrix calcs to have terms in the columns and documents on the rows, the cosine similarity computing in a section further down the script,
-#   expects the columns to be the same number for both matrices, hence the term_doc_matrix has terms in the columns and documents on the rows as code below
-# term_doc_matrix = np.zeros((len(image_dictionary), len(term_dict)))
-# for image_id, alt_tokens in processed_image_descriptions.items():
-    # for token in alt_tokens:
-        # term_doc_matrix[int(image_id) - 1, term_dict[token]] += 1
-
-# logging.info('term_doc_matrix is:'+str(term_doc_matrix))
-# logging.info('len(term_dict) is:'+str(len(term_dict)))
-
-# Compute the TF-IDF weights for the term-document matrix
-
-# Compute the TF-IDF weights
-# norm: The normalization scheme to use for the TF-IDF weights.
-# 'l2' normalization scales the weights so that the sum of the squares of each row is 1
-# smooth_idf: a smoothing factor to the IDF (inverse document frequency) weights to prevent division by zero. If True, a smoothing factor of 1 is added to the IDF weights, otherwise no smoothing is applied
-# use_idf: use IDF weighting in addition to TF (term frequency) weighting. If True, the TF-IDF weights are computed as tf * idf, whereas tf is the raw term frequency in the document and idf is the inverse document frequency of the term.
-# tfidf = TfidfTransformer(norm='l2', smooth_idf=True, use_idf=True)
-# tfidf.fit(term_doc_matrix)
-# tfidf_weights = tfidf.transform(term_doc_matrix).toarray()
-# logging.info('tfidf_weights is:' + str(tfidf_weights))
-# Compute the cosine similarity between each query and document using the query-term matrix and the TF-IDF weights
-
-# Transform the query into a TF-IDF vector.
-# from sklearn.feature_extraction.text import CountVectorizer
-# vectorizer = CountVectorizer()
-
 processed_documents = preprocess_documents(alt_desc_list_of_strings)
 # Use TfidfVectorizer to create a vector representation of the documents and query
 vectorizer = TfidfVectorizer()                                        
@@ -225,28 +159,6 @@ if submit_button:
     # Compute the cosine similarity between the query vector and the document vectors
     similarity_scores = cosine_similarity(query_vector, tfidf_matrix[:-1])
     
-    # Create bag-of-words representation
-    # bow_query = {}
-    # for token in preprocessed_query:
-        # if token in bow_query:
-            # bow_query[token] += 1  # Increment count if word already exists in dictionary
-        # else:
-            # bow_query[token] = 1  # Add word to dictionary if it doesn't exist
-
-    # print('bow_query is:',bow_query)
-    # Preprocessing steps
-    # vectorizer = CountVectorizer(stop_words="english")
-    # vectorizer.fit_transform(alt_desc_list_of_strings)
-    # Represent query as vector
-    #query_vec = vectorizer.transform([query])
-    # Calculate cosine similarity
-    #similarity_scores = cosine_similarity(query_vec, vectorizer.transform(alt_desc_list_of_strings))
-    ###############
-    # print('similarity score type is:')
-    # print(type(similarity_scores))
-    # print('print similarity_scores')
-    # print(similarity_scores)
-    # print('convert the numpy.ndarray to a dataframe')
     df = pd.DataFrame(similarity_scores)
     print(df)
     print('dataframe of the similarity_scores printed')
@@ -271,27 +183,31 @@ if submit_button:
         df_images_similarity_no_zero['similarity_score'].sort_values(ascending=False).index]
     print('URL image results ranked are:')
     print(df_full_url_sorted_similarity_score_desc)
-    #print('about to output search results to local file')
-    # output DataFrame to CSV file with directory path
-    #output_dir = r'C:\Users\patri\OneDrive\Documents\dcu\2023_semester_3\CA6005_Mechanics_of_Search\assignment_2\prod\\'
-    #output_file = 'image_results_ranked_pycharm_v1.csv'
-    #df_full_url_sorted_similarity_score_desc.to_csv(output_dir + output_file, index=False)
-    #df_full_url_sorted_similarity_score_desc.to_csv(
-    #    'image_object_detection_prediction/image_results_ranked_pycharm_v1.csv',
-    #    index=False)
+    df_full_url_sorted_similarity_score_desc['similarity_score'] = df_full_url_sorted_similarity_score_desc['similarity_score'].multiply(100)
+    # Reorder the columns
+    df_full_url_sorted_similarity_score_desc = df_full_url_sorted_similarity_score_desc.reindex(columns=['similarity_score', 'full_url'])
+    # Round column 'similarity_score' to a whole number
+    df_full_url_sorted_similarity_score_desc['similarity_score'] = df_full_url_sorted_similarity_score_desc['similarity_score'].round(0)
+    # Convert column 'similarity_score' to integer data type
+    df_full_url_sorted_similarity_score_desc['similarity_score'] = df_full_url_sorted_similarity_score_desc['similarity_score'].astype(int)
+    df_full_url_sorted_similarity_score_desc['similarity_score'] = df_full_url_sorted_similarity_score_desc[
+        'similarity_score'].astype(str)
+    # define a lambda function to add percentage symbol to each value in the 'similarity_score' column
+    add_percent = lambda x: str(x) + '%'
+    # apply the lambda function to the 'Percentage' column using the 'apply()' method
+    df_full_url_sorted_similarity_score_desc['similarity_score'] = df_full_url_sorted_similarity_score_desc['similarity_score'].apply(add_percent)
+
+    # Rename column 'A' to 'X'
+    df_full_url_sorted_similarity_score_desc = df_full_url_sorted_similarity_score_desc.rename(columns={'similarity_score': 'relevancy %'})
     print('output of results to disk completed')
 
     results = df_full_url_sorted_similarity_score_desc.values.tolist()
     print(results)
 
     #results = ["Result 1", "Result 2", "Result 3"]
-    st.write("Results:")
-    for result in results:
-        st.write(result)
-
-    # Print results in descending order
-    # results = [(similarity_scores[0][i], document) for i, document in enumerate(alt_desc_list_of_strings)]
-    # results.sort(reverse=True)
-    # print('i and score and document are:')
-    # for score, document in results:
-    # print(score, document)
+    # st.write("Results:")
+    # for result in results:
+        # st.write(result)
+        # display the data
+    for i, row in df_full_url_sorted_similarity_score_desc.iterrows():
+        st.write(f"{row['relevancy %']}<br>{row['full_url']}", unsafe_allow_html=True)
